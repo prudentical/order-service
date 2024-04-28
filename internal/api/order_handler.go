@@ -33,7 +33,7 @@ func (h OrderHandlerImpl) GetByBotId(c echo.Context) error {
 	botIdStr := c.Param("bot_id")
 	botId, err := strconv.Atoi(botIdStr)
 	if err != nil {
-		return err
+		return InvalidIDError{Id: botIdStr, TypeName: "Bot"}
 	}
 	pageStr := c.QueryParam("page")
 	page, err := strconv.Atoi(pageStr)
@@ -56,7 +56,7 @@ func (h OrderHandlerImpl) DeleteByBotId(c echo.Context) error {
 	botIdStr := c.Param("bot_id")
 	botId, err := strconv.Atoi(botIdStr)
 	if err != nil {
-		return err
+		return InvalidIDError{Id: botIdStr, TypeName: "Bot"}
 	}
 	err = h.service.DeleteByBotId(botId)
 	if err != nil {

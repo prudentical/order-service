@@ -2,7 +2,7 @@ package app
 
 import (
 	"log/slog"
-	"order-service/configuration"
+	"order-service/internal/configuration"
 
 	"go.uber.org/fx/fxevent"
 	"go.uber.org/zap"

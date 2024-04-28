@@ -4,7 +4,8 @@ import (
 	"context"
 	"fmt"
 	"log/slog"
-	"order-service/configuration"
+	"order-service/internal/configuration"
+	"order-service/internal/discovery"
 	"order-service/internal/message"
 
 	"go.uber.org/fx"
@@ -15,12 +16,13 @@ type AppSetupManager interface {
 	Shutdown() error
 }
 type appSetupManagerImpl struct {
-	app      RESTApp
-	messages message.MessageHandler
+	app       RESTApp
+	messages  message.MessageHandler
+	discovery discovery.ServiceDiscovery
 }
 
-func NewAppSetupManager(app RESTApp, messages message.MessageHandler) AppSetupManager {
-	return appSetupManagerImpl{app, messages}
+func NewAppSetupManager(app RESTApp, messages message.MessageHandler, discovery discovery.ServiceDiscovery) AppSetupManager {
+	return appSetupManagerImpl{app, messages, discovery}
 }
 
 func (a appSetupManagerImpl) Setup() error {
@@ -28,7 +30,17 @@ func (a appSetupManagerImpl) Setup() error {
 	if err != nil {
 		return err
 	}
+
 	err = a.messages.RegisterMessagesListener()
+	if err != nil {
+		return err
+	}
+
+	err = a.discovery.Register()
+	if err != nil {
+		return err
+	}
+
 	return err
 }
 

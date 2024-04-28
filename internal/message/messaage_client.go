@@ -3,7 +3,7 @@ package message
 import (
 	"fmt"
 	"log/slog"
-	"order-service/configuration"
+	"order-service/internal/configuration"
 
 	amqp "github.com/rabbitmq/amqp091-go"
 )

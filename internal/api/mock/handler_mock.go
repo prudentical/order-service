@@ -12,7 +12,7 @@ package mock_api
 import (
 	reflect "reflect"
 
-	v4 "github.com/labstack/echo/v4"
+	echo "github.com/labstack/echo/v4"
 	gomock "go.uber.org/mock/gomock"
 )
 
@@ -40,7 +40,7 @@ func (m *MockHandler) EXPECT() *MockHandlerMockRecorder {
 }
 
 // HandleRoutes mocks base method.
-func (m *MockHandler) HandleRoutes(e *v4.Echo) {
+func (m *MockHandler) HandleRoutes(e *echo.Echo) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "HandleRoutes", e)
 }

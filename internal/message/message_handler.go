@@ -3,7 +3,7 @@ package message
 import (
 	"encoding/json"
 	"log/slog"
-	"order-service/configuration"
+	"order-service/internal/configuration"
 	"order-service/internal/model"
 	"order-service/internal/service"
 	"order-service/internal/util"

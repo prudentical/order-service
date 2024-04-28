@@ -4,10 +4,11 @@ import (
 	"go.uber.org/fx"
 	"go.uber.org/fx/fxevent"
 
-	"order-service/configuration"
-	"order-service/database"
 	"order-service/internal/api"
 	"order-service/internal/app"
+	"order-service/internal/configuration"
+	"order-service/internal/database"
+	"order-service/internal/discovery"
 	"order-service/internal/message"
 	"order-service/internal/persistence"
 	"order-service/internal/service"
@@ -21,6 +22,7 @@ func main() {
 		fx.Provide(app.NewFxLogger),
 		fx.Provide(app.ProvideEcho),
 		fx.Provide(app.NewAppSetupManager),
+		fx.Provide(discovery.NewServiceDiscovery),
 		fx.Provide(util.NewValidator),
 		fx.Provide(api.NewHTTPErrorHandler),
 		fx.Provide(database.NewDatabaseConnection),
@@ -28,6 +30,7 @@ func main() {
 		fx.Provide(persistence.NewOrderDAO),
 		fx.Provide(service.NewOrderService),
 		fx.Provide(message.NewMessageHandler),
+		asHandler(api.NewHealthCheck),
 		asHandler(api.NewOrderHandler),
 		fx.Provide(fx.Annotate(
 			app.NewRestApp,

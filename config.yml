@@ -3,7 +3,7 @@ app:
     env: dev
 server:
     host: localhost
-    port: 8001
+    port: 8004
 database:
     name: db
     host: localhost

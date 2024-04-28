@@ -12,7 +12,7 @@ package mock_api
 import (
 	reflect "reflect"
 
-	v4 "github.com/labstack/echo/v4"
+	echo "github.com/labstack/echo/v4"
 	gomock "go.uber.org/mock/gomock"
 )
 
@@ -40,7 +40,7 @@ func (m *MockOrderHandler) EXPECT() *MockOrderHandlerMockRecorder {
 }
 
 // DeleteByBotId mocks base method.
-func (m *MockOrderHandler) DeleteByBotId(c v4.Context) error {
+func (m *MockOrderHandler) DeleteByBotId(c echo.Context) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "DeleteByBotId", c)
 	ret0, _ := ret[0].(error)
@@ -54,7 +54,7 @@ func (mr *MockOrderHandlerMockRecorder) DeleteByBotId(c any) *gomock.Call {
 }
 
 // GetByBotId mocks base method.
-func (m *MockOrderHandler) GetByBotId(c v4.Context) error {
+func (m *MockOrderHandler) GetByBotId(c echo.Context) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetByBotId", c)
 	ret0, _ := ret[0].(error)
@@ -68,7 +68,7 @@ func (mr *MockOrderHandlerMockRecorder) GetByBotId(c any) *gomock.Call {
 }
 
 // HandleRoutes mocks base method.
-func (m *MockOrderHandler) HandleRoutes(e *v4.Echo) {
+func (m *MockOrderHandler) HandleRoutes(e *echo.Echo) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "HandleRoutes", e)
 }

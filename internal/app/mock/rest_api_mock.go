@@ -12,7 +12,7 @@ package mock_app
 import (
 	reflect "reflect"
 
-	v4 "github.com/labstack/echo/v4"
+	echo "github.com/labstack/echo/v4"
 	gomock "go.uber.org/mock/gomock"
 )
 
@@ -40,10 +40,10 @@ func (m *MockRESTApp) EXPECT() *MockRESTAppMockRecorder {
 }
 
 // server mocks base method.
-func (m *MockRESTApp) server() *v4.Echo {
+func (m *MockRESTApp) server() *echo.Echo {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "server")
-	ret0, _ := ret[0].(*v4.Echo)
+	ret0, _ := ret[0].(*echo.Echo)
 	return ret0
 }
 

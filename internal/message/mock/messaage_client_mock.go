@@ -12,7 +12,7 @@ package mock_message
 import (
 	reflect "reflect"
 
-	amqp091_go "github.com/rabbitmq/amqp091-go"
+	amqp091 "github.com/rabbitmq/amqp091-go"
 	gomock "go.uber.org/mock/gomock"
 )
 
@@ -52,10 +52,10 @@ func (mr *MockMessageQueueClientMockRecorder) Done() *gomock.Call {
 }
 
 // ReadChannel mocks base method.
-func (m *MockMessageQueueClient) ReadChannel(exchangeName, exchangeType, queue string) (<-chan amqp091_go.Delivery, error) {
+func (m *MockMessageQueueClient) ReadChannel(exchangeName, exchangeType, queue string) (<-chan amqp091.Delivery, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ReadChannel", exchangeName, exchangeType, queue)
-	ret0, _ := ret[0].(<-chan amqp091_go.Delivery)
+	ret0, _ := ret[0].(<-chan amqp091.Delivery)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }

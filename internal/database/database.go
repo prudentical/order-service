@@ -3,7 +3,7 @@ package database
 import (
 	"fmt"
 	"log/slog"
-	"order-service/configuration"
+	"order-service/internal/configuration"
 	"time"
 
 	"github.com/golang-migrate/migrate/v4"
@@ -68,7 +68,7 @@ func migrateSchema(db *gorm.DB, logger *slog.Logger) error {
 	}
 
 	m, err := migrate.NewWithDatabaseInstance(
-		"file://./database/migrations",
+		"file://./internal/database/migrations",
 		"postgres", driver)
 	if err != nil {
 		return err

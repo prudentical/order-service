@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log/slog"
-	"order-service/configuration"
+	"order-service/internal/configuration"
 	"order-service/internal/discovery"
 	"order-service/internal/message"
 

@@ -4,10 +4,10 @@ import (
 	"go.uber.org/fx"
 	"go.uber.org/fx/fxevent"
 
-	"order-service/configuration"
-	"order-service/database"
 	"order-service/internal/api"
 	"order-service/internal/app"
+	"order-service/internal/configuration"
+	"order-service/internal/database"
 	"order-service/internal/discovery"
 	"order-service/internal/message"
 	"order-service/internal/persistence"

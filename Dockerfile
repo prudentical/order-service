@@ -13,10 +13,10 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o order-service ./cmd/web-service/
 FROM gcr.io/distroless/static:nonroot
 WORKDIR /app
 
-COPY --from=build /app/database/migrations ./database/migrations
+COPY --from=build /app/internal/database/migrations ./internal/database/migrations
 COPY --from=build /app/config.yml .
 COPY --from=build /app/order-service .
 
-EXPOSE 8001
+EXPOSE 8004
 
 CMD ["./order-service"]

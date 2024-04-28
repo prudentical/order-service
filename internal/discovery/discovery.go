@@ -1,7 +1,7 @@
 package discovery
 
 import (
-	"order-service/configuration"
+	"order-service/internal/configuration"
 
 	"fmt"
 	"log/slog"

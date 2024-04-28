@@ -2,6 +2,7 @@ services:
     app:
         build:
             context: .
+        hostname: order-service
         ports:
             - "8004:8004"
         env_file:
@@ -41,7 +42,7 @@ services:
     discovery:
         image: consul:1.15.4
         ports:
-            - "8504:8500"
+            - "8500:8500"
         profiles:
             - app
         healthcheck:

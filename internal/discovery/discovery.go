@@ -81,7 +81,7 @@ func (c consulServiceDiscovery) Discover(name string) (string, error) {
 		return "", err
 	}
 	if len(services) == 0 {
-		return "", NoInstanceAvailable{name}
+		return "", NoInstanceAvailableError{name}
 	}
 	instance := services[rand.Intn(len(services))]
 	result := fmt.Sprintf("%s:%d", instance.Node.Address, instance.Service.Port)

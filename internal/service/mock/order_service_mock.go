@@ -10,8 +10,8 @@
 package mock_service
 
 import (
+	dto "order-service/internal/dto"
 	model "order-service/internal/model"
-	persistence "order-service/internal/persistence"
 	reflect "reflect"
 
 	gomock "go.uber.org/mock/gomock"
@@ -41,7 +41,7 @@ func (m *MockOrderService) EXPECT() *MockOrderServiceMockRecorder {
 }
 
 // Create mocks base method.
-func (m *MockOrderService) Create(order model.Order) (model.Order, error) {
+func (m *MockOrderService) Create(order dto.OrderDTO) (model.Order, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Create", order)
 	ret0, _ := ret[0].(model.Order)
@@ -53,33 +53,4 @@ func (m *MockOrderService) Create(order model.Order) (model.Order, error) {
 func (mr *MockOrderServiceMockRecorder) Create(order any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockOrderService)(nil).Create), order)
-}
-
-// DeleteByBotId mocks base method.
-func (m *MockOrderService) DeleteByBotId(botId int) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "DeleteByBotId", botId)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// DeleteByBotId indicates an expected call of DeleteByBotId.
-func (mr *MockOrderServiceMockRecorder) DeleteByBotId(botId any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteByBotId", reflect.TypeOf((*MockOrderService)(nil).DeleteByBotId), botId)
-}
-
-// GetByBotId mocks base method.
-func (m *MockOrderService) GetByBotId(botId, page, size int) (persistence.Page[model.Order], error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetByBotId", botId, page, size)
-	ret0, _ := ret[0].(persistence.Page[model.Order])
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// GetByBotId indicates an expected call of GetByBotId.
-func (mr *MockOrderServiceMockRecorder) GetByBotId(botId, page, size any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetByBotId", reflect.TypeOf((*MockOrderService)(nil).GetByBotId), botId, page, size)
 }

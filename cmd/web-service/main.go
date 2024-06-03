@@ -28,10 +28,12 @@ func main() {
 		fx.Provide(database.NewDatabaseConnection),
 		fx.Provide(message.NewMessageQueueClient),
 		fx.Provide(persistence.NewOrderDAO),
+		fx.Provide(persistence.NewPositionDAO),
 		fx.Provide(service.NewOrderService),
+		fx.Provide(service.NewPositionService),
 		fx.Provide(message.NewMessageHandler),
 		asHandler(api.NewHealthCheck),
-		asHandler(api.NewOrderHandler),
+		asHandler(api.NewPositionHandler),
 		fx.Provide(fx.Annotate(
 			app.NewRestApp,
 			fx.ParamTags(`group:"handlers"`),

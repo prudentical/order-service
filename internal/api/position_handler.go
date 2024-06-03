@@ -9,29 +9,29 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-type OrderHandler interface {
+type PositionHandler interface {
 	GetByBotId(c echo.Context) error
 	DeleteByBotId(c echo.Context) error
 	HandleRoutes(e *echo.Echo)
 }
 
-type OrderHandlerImpl struct {
-	service service.OrderService
+type PositionHandlerImpl struct {
+	service service.PositionService
 	logger  *slog.Logger
 }
 
-func NewOrderHandler(service service.OrderService, logger *slog.Logger) OrderHandler {
-	return OrderHandlerImpl{service, logger}
+func NewPositionHandler(service service.PositionService, logger *slog.Logger) PositionHandler {
+	return PositionHandlerImpl{service, logger}
 }
 
-func (h OrderHandlerImpl) HandleRoutes(e *echo.Echo) {
-	e.GET("/bots/:bot_id/orders", h.GetByBotId)
-	e.DELETE("/bots/:bot_id/orders", h.DeleteByBotId)
+func (h PositionHandlerImpl) HandleRoutes(e *echo.Echo) {
+	e.GET("/bots/:bot_id/positions", h.GetByBotId)
+	e.DELETE("/bots/:bot_id/positions", h.DeleteByBotId)
 }
 
-func (h OrderHandlerImpl) GetByBotId(c echo.Context) error {
+func (h PositionHandlerImpl) GetByBotId(c echo.Context) error {
 	botIdStr := c.Param("bot_id")
-	botId, err := strconv.Atoi(botIdStr)
+	botId, err := strconv.ParseInt(botIdStr, 10, 64)
 	if err != nil {
 		return InvalidIDError{Id: botIdStr, TypeName: "Bot"}
 	}
@@ -45,16 +45,18 @@ func (h OrderHandlerImpl) GetByBotId(c echo.Context) error {
 	if err != nil {
 		size = 20
 	}
-	result, err := h.service.GetByBotId(botId, page, size)
+	status := c.QueryParam("status")
+
+	result, err := h.service.GetByBotId(botId, page, size, status)
 	if err != nil {
 		return err
 	}
 	return c.JSON(http.StatusOK, result)
 }
 
-func (h OrderHandlerImpl) DeleteByBotId(c echo.Context) error {
+func (h PositionHandlerImpl) DeleteByBotId(c echo.Context) error {
 	botIdStr := c.Param("bot_id")
-	botId, err := strconv.Atoi(botIdStr)
+	botId, err := strconv.ParseInt(botIdStr, 10, 64)
 	if err != nil {
 		return InvalidIDError{Id: botIdStr, TypeName: "Bot"}
 	}

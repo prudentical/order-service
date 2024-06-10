@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log/slog"
 	"order-service/internal/configuration"
+	"order-service/internal/util"
 	"time"
 
 	"github.com/golang-migrate/migrate/v4"
@@ -68,7 +69,7 @@ func migrateSchema(db *gorm.DB, logger *slog.Logger) error {
 	}
 
 	m, err := migrate.NewWithDatabaseInstance(
-		"file://./internal/database/migrations",
+		"file://"+util.RootDir()+"/internal/database/migrations",
 		"postgres", driver)
 	if err != nil {
 		return err

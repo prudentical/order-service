@@ -70,32 +70,32 @@ func (mr *MockPositionServiceMockRecorder) Create(position any) *gomock.Call {
 }
 
 // DeleteByBotId mocks base method.
-func (m *MockPositionService) DeleteByBotId(botId int64) error {
+func (m *MockPositionService) DeleteByBotId(userId, accountId, botId int64) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "DeleteByBotId", botId)
+	ret := m.ctrl.Call(m, "DeleteByBotId", userId, accountId, botId)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // DeleteByBotId indicates an expected call of DeleteByBotId.
-func (mr *MockPositionServiceMockRecorder) DeleteByBotId(botId any) *gomock.Call {
+func (mr *MockPositionServiceMockRecorder) DeleteByBotId(userId, accountId, botId any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteByBotId", reflect.TypeOf((*MockPositionService)(nil).DeleteByBotId), botId)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteByBotId", reflect.TypeOf((*MockPositionService)(nil).DeleteByBotId), userId, accountId, botId)
 }
 
 // GetByBotId mocks base method.
-func (m *MockPositionService) GetByBotId(botId int64, page, size int, status string) (persistence.Page[model.Position], error) {
+func (m *MockPositionService) GetByBotId(userId, accountId, botId int64, page, size int, status string) (persistence.Page[model.Position], error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetByBotId", botId, page, size, status)
+	ret := m.ctrl.Call(m, "GetByBotId", userId, accountId, botId, page, size, status)
 	ret0, _ := ret[0].(persistence.Page[model.Position])
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // GetByBotId indicates an expected call of GetByBotId.
-func (mr *MockPositionServiceMockRecorder) GetByBotId(botId, page, size, status any) *gomock.Call {
+func (mr *MockPositionServiceMockRecorder) GetByBotId(userId, accountId, botId, page, size, status any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetByBotId", reflect.TypeOf((*MockPositionService)(nil).GetByBotId), botId, page, size, status)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetByBotId", reflect.TypeOf((*MockPositionService)(nil).GetByBotId), userId, accountId, botId, page, size, status)
 }
 
 // GetById mocks base method.

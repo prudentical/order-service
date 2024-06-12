@@ -6,19 +6,20 @@ import (
 )
 
 type PositionService interface {
-	GetByBotId(botId int64, page int, size int, status string) (persistence.Page[model.Position], error)
-	DeleteByBotId(botId int64) error
+	GetByBotId(userId int64, accountId int64, botId int64, page int, size int, status string) (persistence.Page[model.Position], error)
+	DeleteByBotId(userId int64, accountId int64, botId int64) error
 	Create(position model.Position) (model.Position, error)
 	Close(id int64) error
 	GetById(id int64) (model.Position, error)
 }
 
 type positionServiceImpl struct {
-	dao persistence.PositionDAO
+	dao      persistence.PositionDAO
+	accounts AccountService
 }
 
-func NewPositionService(dao persistence.PositionDAO) PositionService {
-	return positionServiceImpl{dao}
+func NewPositionService(dao persistence.PositionDAO, accounts AccountService) PositionService {
+	return positionServiceImpl{dao, accounts}
 }
 
 func (s positionServiceImpl) Create(position model.Position) (model.Position, error) {
@@ -29,7 +30,11 @@ func (s positionServiceImpl) GetById(id int64) (model.Position, error) {
 	return s.dao.GetById(id)
 }
 
-func (s positionServiceImpl) GetByBotId(botId int64, page int, size int, status string) (persistence.Page[model.Position], error) {
+func (s positionServiceImpl) GetByBotId(userId int64, accountId int64, botId int64, page int, size int, status string) (persistence.Page[model.Position], error) {
+	_, err := s.accounts.GetAccount(userId, accountId)
+	if err != nil {
+		return persistence.Page[model.Position]{}, err
+	}
 	var statusPtr *string
 	if len(status) > 0 {
 		statusPtr = &status
@@ -37,12 +42,16 @@ func (s positionServiceImpl) GetByBotId(botId int64, page int, size int, status 
 	return s.dao.GetByBotIdPaginated(botId, page, size, statusPtr)
 }
 
-func (s positionServiceImpl) DeleteByBotId(id int64) error {
+func (s positionServiceImpl) DeleteByBotId(userId int64, accountId int64, id int64) error {
+	_, err := s.accounts.GetAccount(userId, accountId)
+	if err != nil {
+		return err
+	}
 	return s.dao.DeleteByBotId(id)
 }
 
 func (s positionServiceImpl) Close(id int64) error {
-	position, err := s.GetById(id)
+	position, err := s.dao.GetById(id)
 	if err != nil {
 		return err
 	}

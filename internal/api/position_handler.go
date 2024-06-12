@@ -25,11 +25,23 @@ func NewPositionHandler(service service.PositionService, logger *slog.Logger) Po
 }
 
 func (h PositionHandlerImpl) HandleRoutes(e *echo.Echo) {
-	e.GET("/bots/:bot_id/positions", h.GetByBotId)
-	e.DELETE("/bots/:bot_id/positions", h.DeleteByBotId)
+	e.GET("/users/:user_id/accounts/:account_id/bots/:bot_id/positions", h.GetByBotId)
+	e.DELETE("/users/:user_id/accounts/:account_id/bots/:bot_id/positions", h.DeleteByBotId)
 }
 
 func (h PositionHandlerImpl) GetByBotId(c echo.Context) error {
+	userIdStr := c.Param("user_id")
+	userId, err := strconv.ParseInt(userIdStr, 10, 64)
+	if err != nil {
+		return InvalidIDError{Id: userIdStr, TypeName: "User"}
+	}
+
+	accountIdStr := c.Param("account_id")
+	accountId, err := strconv.ParseInt(accountIdStr, 10, 64)
+	if err != nil {
+		return InvalidIDError{Id: accountIdStr, TypeName: "Bot"}
+	}
+
 	botIdStr := c.Param("bot_id")
 	botId, err := strconv.ParseInt(botIdStr, 10, 64)
 	if err != nil {
@@ -47,7 +59,7 @@ func (h PositionHandlerImpl) GetByBotId(c echo.Context) error {
 	}
 	status := c.QueryParam("status")
 
-	result, err := h.service.GetByBotId(botId, page, size, status)
+	result, err := h.service.GetByBotId(userId, accountId, botId, page, size, status)
 	if err != nil {
 		return err
 	}
@@ -55,12 +67,24 @@ func (h PositionHandlerImpl) GetByBotId(c echo.Context) error {
 }
 
 func (h PositionHandlerImpl) DeleteByBotId(c echo.Context) error {
+	userIdStr := c.Param("user_id")
+	userId, err := strconv.ParseInt(userIdStr, 10, 64)
+	if err != nil {
+		return InvalidIDError{Id: userIdStr, TypeName: "User"}
+	}
+
+	accountIdStr := c.Param("account_id")
+	accountId, err := strconv.ParseInt(accountIdStr, 10, 64)
+	if err != nil {
+		return InvalidIDError{Id: accountIdStr, TypeName: "Bot"}
+	}
+
 	botIdStr := c.Param("bot_id")
 	botId, err := strconv.ParseInt(botIdStr, 10, 64)
 	if err != nil {
 		return InvalidIDError{Id: botIdStr, TypeName: "Bot"}
 	}
-	err = h.service.DeleteByBotId(botId)
+	err = h.service.DeleteByBotId(userId, accountId, botId)
 	if err != nil {
 		return err
 	}

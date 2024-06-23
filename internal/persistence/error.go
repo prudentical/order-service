@@ -1,7 +1,13 @@
 package persistence
 
-type InvalidUpdateRequest struct{}
+type InvalidUpdateRequestError struct{}
 
-func (InvalidUpdateRequest) Error() string {
+func (InvalidUpdateRequestError) Error() string {
 	return "The requested entity doesn't exists in the database"
+}
+
+type RecordNotFoundError struct{}
+
+func (RecordNotFoundError) Error() string {
+	return "Record not found"
 }

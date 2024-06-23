@@ -5,11 +5,11 @@ import (
 	"reflect"
 )
 
-type QueryParamRequired struct {
+type QueryParamRequiredError struct {
 	msg string
 }
 
-func (v QueryParamRequired) Error() string {
+func (v QueryParamRequiredError) Error() string {
 	return v.msg
 }
 

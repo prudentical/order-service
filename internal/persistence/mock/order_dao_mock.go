@@ -11,7 +11,6 @@ package mock_persistence
 
 import (
 	model "order-service/internal/model"
-	persistence "order-service/internal/persistence"
 	reflect "reflect"
 
 	gomock "go.uber.org/mock/gomock"
@@ -53,33 +52,4 @@ func (m *MockOrderDAO) Create(order model.Order) (model.Order, error) {
 func (mr *MockOrderDAOMockRecorder) Create(order any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockOrderDAO)(nil).Create), order)
-}
-
-// DeleteByBotId mocks base method.
-func (m *MockOrderDAO) DeleteByBotId(botId int) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "DeleteByBotId", botId)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// DeleteByBotId indicates an expected call of DeleteByBotId.
-func (mr *MockOrderDAOMockRecorder) DeleteByBotId(botId any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteByBotId", reflect.TypeOf((*MockOrderDAO)(nil).DeleteByBotId), botId)
-}
-
-// GetByBotIdPaginated mocks base method.
-func (m *MockOrderDAO) GetByBotIdPaginated(botId, page, size int) (persistence.Page[model.Order], error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetByBotIdPaginated", botId, page, size)
-	ret0, _ := ret[0].(persistence.Page[model.Order])
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// GetByBotIdPaginated indicates an expected call of GetByBotIdPaginated.
-func (mr *MockOrderDAOMockRecorder) GetByBotIdPaginated(botId, page, size any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetByBotIdPaginated", reflect.TypeOf((*MockOrderDAO)(nil).GetByBotIdPaginated), botId, page, size)
 }

@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"log/slog"
 	"order-service/internal/configuration"
-	"order-service/internal/model"
+	"order-service/internal/dto"
 	"order-service/internal/service"
 	"order-service/internal/util"
 
@@ -60,9 +60,12 @@ func (s *RabbitMQService) handleDeliveries(deliveries <-chan amqp.Delivery) {
 }
 
 func (s *RabbitMQService) processOrder(delivery amqp.Delivery) error {
-	order := model.Order{}
-	json.Unmarshal([]byte(delivery.Body), &order)
-	err := s.validator.Validate(order)
+	order := dto.OrderDTO{}
+	err := json.Unmarshal([]byte(delivery.Body), &order)
+	if err != nil {
+		return err
+	}
+	err = s.validator.Validate(order)
 	if err != nil {
 		return err
 	}
